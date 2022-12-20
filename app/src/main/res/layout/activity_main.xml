@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:padding="10dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,14 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select File"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_compress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Compress"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:text="Input: "
             android:textColor="@android:color/black"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_input"
@@ -50,7 +50,7 @@
             android:layout_weight="3"
             android:text="No File"
             android:textColor="@android:color/black"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:text="Output: "
             android:textColor="@android:color/black"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_output"
@@ -76,7 +76,7 @@
             android:layout_weight="3"
             android:text="No File"
             android:textColor="@android:color/black"
-            android:textSize="12sp"/>
+            android:textSize="12sp" />
     </LinearLayout>
 
     <TextView
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textColor="@android:color/holo_blue_light"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_progress"
@@ -93,12 +93,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textColor="@android:color/holo_blue_light"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <ProgressBar
         android:id="@+id/pb_compress"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
 </LinearLayout>

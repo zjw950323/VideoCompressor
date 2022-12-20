@@ -6,12 +6,15 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.vincent.videocompressor.VideoCompress;
 
@@ -22,14 +25,14 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- *  @dec  首页
- *  @author tangxiaopeng
- *  @date  2018/10/16 18:37
+ * @author tangxiaopeng
+ * @dec 首页
+ * @date 2018/10/16 18:37
  */
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_FOR_VIDEO_FILE = 1000;
     private TextView tv_input, tv_output, tv_indicator, tv_progress;
-    private String outputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+
 
     private String inputPath;
     private String outputPath;
@@ -51,23 +54,27 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         initView();
     }
-    String destPath="";
+
+    String destPath = "";
+
     private void initView() {
         Button btn_select = (Button) findViewById(R.id.btn_select);
         btn_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addLoacalVideo();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    addLoacalVideo();
+                }
             }
         });
-
 
 
         Button btn_compress = (Button) findViewById(R.id.btn_compress);
         btn_compress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 destPath = tv_output.getText().toString() + File.separator + "out_VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss", getLocale()).format(new Date()) + ".mp4";
+                destPath = tv_output.getText().toString()+ File.separator + "out_VID_" + new SimpleDateFormat("yyyyMMdd_HHmmss", getLocale()).format(new Date()) + ".mp4";
+                Log.e("btn_compress",tv_input.getText().toString());
                 VideoCompress.compressVideoMedium(tv_input.getText().toString(), destPath, new VideoCompress.CompressListener() {
                     @Override
                     public void onStart() {
@@ -89,10 +96,10 @@ public class MainActivity extends AppCompatActivity {
                         pb_compress.setVisibility(View.INVISIBLE);
                         endTime = System.currentTimeMillis();
                         Util.writeFile(MainActivity.this, "End at: " + new SimpleDateFormat("HH:mm:ss", getLocale()).format(new Date()) + "\n");
-                        Util.writeFile(MainActivity.this, "Total: " + ((endTime - startTime)/1000) + "s" + "\n");
+                        Util.writeFile(MainActivity.this, "Total: " + ((endTime - startTime) / 1000) + "s" + "\n");
                         Util.writeFile(MainActivity.this);
 
-                        startActivity(new Intent(MainActivity.this,VideoActivity.class).putExtra("vvVideo",destPath));
+                        startActivity(new Intent(MainActivity.this, VideoActivity.class).putExtra("vvVideo", destPath));
 
                     }
 
@@ -114,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         tv_input = (TextView) findViewById(R.id.tv_input);
         tv_output = (TextView) findViewById(R.id.tv_output);
+        String outputDir = Environment.getExternalStorageDirectory().getAbsolutePath();
         tv_output.setText(outputDir);
         tv_indicator = (TextView) findViewById(R.id.tv_indicator);
         tv_progress = (TextView) findViewById(R.id.tv_progress);
@@ -121,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         pb_compress = (ProgressBar) findViewById(R.id.pb_compress);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void addLoacalVideo() {
         Intent intentvideo = new Intent();
         if (Build.VERSION.SDK_INT < 19) {
@@ -130,6 +139,13 @@ public class MainActivity extends AppCompatActivity {
             intentvideo.setAction(Intent.ACTION_OPEN_DOCUMENT);
             intentvideo.addCategory(Intent.CATEGORY_OPENABLE);
             intentvideo.setType("video/*");
+//            Uri uri1 = Uri.parse("content://com.android.externalstorage.documents/document/primary%3AAndroid%2Fdata");
+//            intentvideo.setAction(Intent.ACTION_OPEN_DOCUMENT_TREE);
+//            intentvideo.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+//                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+//                    | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+//                    | Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
+//            intentvideo.putExtra(DocumentsContract.EXTRA_INITIAL_URI, uri1);
         }
         startActivityForResult(Intent.createChooser(intentvideo, "选择要导入的视频"), REQUEST_FOR_VIDEO_FILE);
     }
@@ -168,12 +184,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressWarnings("deprecation")
-    public static Locale getSystemLocaleLegacy(Configuration config){
+    public static Locale getSystemLocaleLegacy(Configuration config) {
         return config.locale;
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    public static Locale getSystemLocale(Configuration config){
+    public static Locale getSystemLocale(Configuration config) {
         return config.getLocales().get(0);
     }
 }

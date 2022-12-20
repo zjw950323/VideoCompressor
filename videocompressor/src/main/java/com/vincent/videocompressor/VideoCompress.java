@@ -9,7 +9,6 @@ import android.os.AsyncTask;
  */
 
 public class VideoCompress {
-    private static final String TAG = VideoCompress.class.getSimpleName();
 
     public static VideoCompressTask compressVideoHigh(String srcPath, String destPath, CompressListener listener) {
         VideoCompressTask task = new VideoCompressTask(listener, VideoController.COMPRESS_QUALITY_HIGH);
