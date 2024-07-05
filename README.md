@@ -1,3 +1,4 @@
+# 基于老哥项目的二次维护 适配到AndroixX 对应链接：https://blog.csdn.net/qq_38213766/article/details/128388374
 # 如果您觉得本项目对你有用，请随手star，谢谢
 个人主页：https://www.jianshu.com/u/521b2b15caba
 
